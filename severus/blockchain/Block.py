@@ -2,8 +2,8 @@ import tinydb
 import time
 import hashlib
 from severus.db import blocks
-from severus.utils.calculate_difficulty import calculate_difficulty
-from severus.utils.verify_block import verify_block
+from severus.blockchain.utils.calculate_difficulty import calculate_difficulty
+from severus.blockchain.utils.verify_block import verify_block
 
 class Block(object):
     def __init__(

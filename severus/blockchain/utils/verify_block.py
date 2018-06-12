@@ -1,7 +1,8 @@
 import hashlib
-from severus.utils.calculate_difficulty import calculate_difficulty
+from severus.blockchain.utils.calculate_difficulty import calculate_difficulty
 
 def verify_pow(block):
+    # Also need to verify that PoW is unique
     proof_of_work = block.proof_of_work
     difficulty = calculate_difficulty(block=block)
     hash_check = hashlib.sha512(proof_of_work.encode()).hexdigest()

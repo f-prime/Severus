@@ -1,5 +1,5 @@
-from severus import Block
-from severus.utils.calculate_difficulty import calculate_difficulty
+from severus.blockchain import Block
+from severus.blockchain.utils.calculate_difficulty import calculate_difficulty
 import random
 import hashlib
 from severus.db import blocks
