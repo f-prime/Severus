@@ -1,1 +1,1 @@
-{"_default": {}, "blocks": {"1": {"timestamp": 1528783111.649139, "previous": "", "data": [], "hash": "3e7d1bf61f040179d0006c9eb74410f8a19d0ac7cd796d57570ccbb9bf8eccde"}}}
+{"_default": {}, "blocks": {"1": {"index": 0, "timestamp": 1528783431.625237, "previous": "", "data": [], "hash": "ad4fc1b02120bbfe857da988c0f7496297548225dafb3e8d187d156c9fd576fd", "difficulty": 0, "pow": "genisus"}}}

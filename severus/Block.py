@@ -25,7 +25,7 @@ class Block(object):
         self.block_hash = self.hash_block()
 
     def hash_block(self):
-        data = "{}{}{}{}".format(self.index, self.timestamp, self.previous_hash, self.block_data)
+        data = "{}{}{}{}{}{}".format(self.index, self.timestamp, self.previous_hash, self.block_data, self.difficulty, self.proof_of_work)
         return hashlib.sha256(data.encode()).hexdigest()
 
     def __str__(self):
@@ -41,8 +41,11 @@ Proof of Work: {}
 
     def save(self):
         blocks.insert({
+            "index":self.index,
             "timestamp":self.timestamp,
             "previous":self.previous_hash,
             "data":self.block_data,
-            "hash":self.block_hash
+            "hash":self.block_hash,
+            "difficulty":self.difficulty,
+            "pow":self.proof_of_work
         })
