@@ -1,19 +1,16 @@
 import tinydb
 import time
 import hashlib
-from severus.db import blocks
-from severus.utils.calculate_difficulty import calculate_difficulty
-from severus.utils.verify_pow import verify_pow
+from db import blocks
+from utils.calculate_difficulty import calculate_difficulty
+from utils.verify_pow import verify_pow
 
 class Block(object):
     def __init__(self, block_data, previous_hash, proof_of_work):
         self.index = len(blocks.all())
         self.timestamp = time.time()
         self.previous_hash = previous_hash
-        if type(block_data) == dict:
-            block_data = [block_data]
-        elif type(block_data) != list:
-            raise Exception("Block data must be an array of dictionaries")
+        block_data = block_data
         
         self.difficulty = calculate_difficulty()
         self.proof_of_work = proof_of_work

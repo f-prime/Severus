@@ -1,4 +1,4 @@
-from severus.db import blocks
+from db import blocks
 
 def calculate_difficulty():
     # Just a termporary difficulty calculation algorithm

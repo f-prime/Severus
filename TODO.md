@@ -1,0 +1,2 @@
+- Make Block general enough to insert any block data
+- Make verifying of the block a utility function
