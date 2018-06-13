@@ -1,8 +1,9 @@
 from severus.db import blocks, wallet
 from severus.user import User
+import sys
 
 def get_help(command):
-    print ("""Severus Help
+    print ("""Severus Commands
 
 help
 getaddresses
@@ -33,10 +34,14 @@ def main():
         "getbalances":get_balances
     }
 
-    while True:
-        command = input("> ")
-        if command in commands:
-            commands[command](command)
+    if len(sys.argv) < 2:
+        get_help(["help"])
+        sys.exit()
+
+    command = sys.argv[1:]    
+
+    if command[0] in commands:
+        commands[command[0]](command)
 
 if __name__ == "__main__":
     main()
