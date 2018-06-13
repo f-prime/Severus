@@ -5,8 +5,11 @@ import hashlib
 from severus.db import blocks
 import time
 
+def get_nonce():
+    return random.randint(0, 10*10**10)
+
 def mine():
-    start_nonce = random.randint(0, 9999999)
+    start_nonce = get_nonce()
     difficulty = calculate_difficulty()
     print("Mining at difficulty", difficulty)
     while True:
@@ -14,7 +17,7 @@ def mine():
         if difficulty != new_diff:
             print("New Diff", new_diff)
             difficulty = new_diff
-            start_nonce = random.randint(0, 9999999)
+            start_nonce = get_nonce()
         check = hashlib.sha512(str(start_nonce).encode()).hexdigest()
         if check.startswith(new_diff * "0"):
             all_blocks = blocks.all()
@@ -40,7 +43,11 @@ def mine():
                 timestamp=time.time()
             )
             print("Found block", block)
-            block.save()
+            try:
+                block.save()
+            except:
+                print("Invalid Block")
+                start_nonce = get_nonce()
         start_nonce += 1
 
 if __name__ == "__main__":

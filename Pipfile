@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 tinydb = "*"
+rsa = "*"
 
 [dev-packages]
 
