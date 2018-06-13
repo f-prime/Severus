@@ -18,7 +18,7 @@ class Block(object):
         self.index = index
         self.timestamp = timestamp
         self.previous_hash = previous_hash
-        block_data = block_data
+        self.block_data = block_data
         self.difficulty = difficulty
         self.proof_of_work = proof_of_work
         self.block_data = block_data
@@ -48,7 +48,7 @@ Proof of Work: {}
                 self.index, 
                 self.timestamp, 
                 self.previous_hash, 
-                self.block_data, 
+                [bd.to_dict() for bd in self.block_data], 
                 self.block_hash, 
                 self.difficulty, 
                 self.proof_of_work)
@@ -56,12 +56,16 @@ Proof of Work: {}
     def save(self):
         if not verify_block(self):
             raise Exception("Invalid Block")
-        
+    
+        block_data = []
+        for item in self.block_data:
+            block_data.append(item.to_dict())
+    
         blocks.insert({
             "index":self.index,
             "timestamp":self.timestamp,
             "previous":self.previous_hash,
-            "data":self.block_data,
+            "data":block_data,
             "hash":self.block_hash,
             "difficulty":self.difficulty,
             "pow":self.proof_of_work
