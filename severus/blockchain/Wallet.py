@@ -2,7 +2,7 @@ from severus.db import wallet, blocks
 import rsa
 import base64
 
-class User(object):
+class Wallet(object):
     def __init__(self, private_key=None, public_key=None):
         self.private_key = private_key
         self.public_key = public_key
