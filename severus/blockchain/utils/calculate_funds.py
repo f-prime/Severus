@@ -1,4 +1,4 @@
-from .. import db
+from severus import db
 
 def calculate_funds(public_key):
     blocks = db.get_blocks()

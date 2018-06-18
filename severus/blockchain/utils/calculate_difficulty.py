@@ -1,6 +1,6 @@
-from .. import db
 import time
 import math
+from severus import db
 
 def calculate_difficulty(block=None):
     all_blocks = db.get_blocks()

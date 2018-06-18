@@ -1,6 +1,6 @@
 import tinydb
-from . import Block, Transaction, Input, Output
-from .utils import crypto
+from .blockchain import Block, Transaction, Input, Output
+from .blockchain.utils import crypto
 
 blocks = tinydb.TinyDB("blocks.db").table("blocks")
 wallet = tinydb.TinyDB("wallet.db").table("wallet")
@@ -33,7 +33,7 @@ def get_blocks():
             if data['type'] == "TRANSACTION":
                 for input_ in data['inputs']:
                     inputs.append(
-                        Input.Input(
+                        Input(
                             txid=input_['txid'],
                             amount=input_['amount'],
                             from_addr=crypto.load_pub_key(input_['from']),
@@ -44,14 +44,14 @@ def get_blocks():
                     )
                 for output in data['outputs']:
                     outputs.append(
-                        Output.Output(
+                        Output(
                             amount=output['amount'],
                             to_addr=crypto.load_pub_key(output['to']),
                             from_addr=crypto.load_pub_key(output['from'])
                         )
                     )
                 block_data.append(
-                    Transaction.Transaction(
+                    Transaction(
                         txid=data['txid'],
                         from_addr=crypto.load_pub_key(data['from']),
                         to_addr=crypto.load_pub_key(data['to']),
@@ -61,9 +61,8 @@ def get_blocks():
                         signature=data['signature']
                     )
                 )
-        
         block_objects.append(
-            Block.Block(
+            Block(
                 index=block['index'],
                 block_data=block_data,
                 previous_hash=block['previous'],

@@ -1,9 +1,7 @@
-import tinydb
 import time
 import hashlib
-from .utils import crypto, verify_block, calculate_difficulty
-from . import db
-
+from .utils import verify_block, calculate_difficulty
+from severus import db
 
 class Block(object):
     def __init__(
@@ -12,15 +10,18 @@ class Block(object):
             block_data, 
             previous_hash, 
             proof_of_work, 
-            difficulty=calculate_difficulty.calculate_difficulty(), 
-            timestamp = time.time(),
+            difficulty=None, 
+            timestamp=time.time(),
             block_hash=None
             ):
         self.index = index
         self.timestamp = timestamp
         self.previous_hash = previous_hash
         self.block_data = block_data
-        self.difficulty = difficulty
+        if difficulty != None:
+            self.difficulty = difficulty
+        else:
+            self.difficulty = calculate_difficulty.calculate_difficulty()
         self.proof_of_work = proof_of_work
         if block_hash:
             self.block_hash = block_hash

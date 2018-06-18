@@ -1,6 +1,5 @@
-from . import db
+from .. import db
 from .utils import crypto
-import uuid
 
 class Transaction(object):
     def __init__(
@@ -55,11 +54,10 @@ class Transaction(object):
         for block in blocks:
             for data in block.block_data:
                 if data.type == self.type:
-                    for input_ in block.inputs:
+                    for input_ in data.inputs:
                         if input_.txid == self.txid:
                             return False
 
-        
         signed = crypto.check_sig(self.txid, self.from_addr, self.signature)
         return signed
 
