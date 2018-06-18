@@ -16,13 +16,10 @@ def verify_pow(block):
     return False
 
 def verify_transactions(block):
-    """
-    Make sure there is no double spending and that sender has enough money to spend
-
-    - Verifies signature on transaction is valid for the sender
-    - Verifies user has enough spendable coins available
-    - Verifies transaction is not duplicated
-    """
+    for transaction in block.block_data:
+        if transaction.type == "TRANSACTION":
+            if not transaction.verify():
+                return False
     return True
 
 def verify_block_order(block):

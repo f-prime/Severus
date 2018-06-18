@@ -1,3 +1,5 @@
+print(__import__("sys").path)
+
 from severus import utils
 from severus import Block
 from severus import db

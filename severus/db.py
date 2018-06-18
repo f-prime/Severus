@@ -1,6 +1,6 @@
 import tinydb
-from severus import Block, Transaction, Input, Output
-from severus.utils import crypto
+from . import Block, Transaction, Input, Output
+from .utils import crypto
 
 blocks = tinydb.TinyDB("blocks.db").table("blocks")
 wallet = tinydb.TinyDB("wallet.db").table("wallet")
@@ -61,6 +61,7 @@ def get_blocks():
                         signature=data['signature']
                     )
                 )
+        
         block_objects.append(
             Block.Block(
                 index=block['index'],
