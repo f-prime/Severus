@@ -1,5 +1,6 @@
 from .. import db
 from .utils import crypto
+from .utils import calculate_funds
 
 class Transaction(object):
     def __init__(
@@ -57,6 +58,10 @@ class Transaction(object):
                     for input_ in data.inputs:
                         if input_.txid == self.txid:
                             return False
+
+        total_funds = calculate_funds.calculate_funds(self.from_addr)
+        if total_funds < self.amount:
+            return False
 
         signed = crypto.check_sig(self.txid, self.from_addr, self.signature)
         return signed

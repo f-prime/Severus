@@ -24,12 +24,13 @@ def verify_transactions(block):
 
 def verify_block_order(block):
     """
-    Verify block comes after (both in time and index) to previous block
+    Verify block comes after (in time, index, previous hash) to previous block
     """
     all_blocks = db.get_blocks()
 
     if not all_blocks:
         return True
+
     prev_block = all_blocks[-1]
     if prev_block.block_hash != block.previous_hash:
         return False

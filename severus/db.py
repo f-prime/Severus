@@ -21,8 +21,6 @@ def insert_block(block):
     })
 
 def get_blocks():
-    # Helps avoid circular imports
-   
     all_blocks = blocks.all()
     block_objects = []
     for block in all_blocks:
