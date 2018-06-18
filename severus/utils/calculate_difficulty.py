@@ -1,18 +1,18 @@
-from severus.db import blocks
+from .. import db
 import time
 import math
 
 def calculate_difficulty(block=None):
-    all_blocks = blocks.all()
+    all_blocks = db.get_blocks()
     if not block:
         num_blocks = len(all_blocks)
         if num_blocks == 0:
             return 0
         previous_block = all_blocks[-1]
-        prev_difficulty = previous_block['difficulty']
+        prev_difficulty = previous_block.difficulty
         if prev_difficulty == 0:
             prev_difficulty += 1
-        previous_timestamp = previous_block['timestamp']
+        previous_timestamp = previous_block.timestamp
         time_to_complete = (time.time() - previous_timestamp) / 60.0 
 
     else:
@@ -20,8 +20,8 @@ def calculate_difficulty(block=None):
             return 0
         
         previous_block = all_blocks[block.index - 1]
-        previous_timestamp = previous_block['timestamp']
-        prev_difficulty = previous_block['difficulty']
+        previous_timestamp = previous_block.timestamp
+        prev_difficulty = previous_block.difficulty
 
         if prev_difficulty == 0:
             prev_difficulty += 1

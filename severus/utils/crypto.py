@@ -17,13 +17,13 @@ def get_keys():
 def load_pub_key(key):
     if key == "severus":
         return key
-    elif type(key) != bytes:
+    elif not isinstance(key, bytes):
         return key
     key = base64.b64decode(key)
     return rsa.PublicKey._load_pkcs1_der(key)
 
 def load_priv_key(key):
-    if type(key) != bytes:
+    if not isinstance(key, bytes):
         return key.decode()
     key = base64.b64decode(key)
     return rsa.PrivateKey._load_pkcs1_der(key)
@@ -31,8 +31,8 @@ def load_priv_key(key):
 def save_key(key):
     if key == "severus":
         return key
-    if type(key) == bytes:
+    if isinstance(key, bytes):
         return key.decode()
-    if type(key) == str:
+    if isinstance(key, str):
         return key
     return base64.b64encode(key._save_pkcs1_der()).decode()

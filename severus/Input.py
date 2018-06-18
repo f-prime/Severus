@@ -1,4 +1,4 @@
-from severus.blockchain.utils.crypto import save_key, load_pub_key
+from .utils import crypto
 
 class Input(object):
     def __init__(
@@ -12,8 +12,8 @@ class Input(object):
         
         self.txid = txid
         self.amount = amount
-        self.from_addr = load_pub_key(from_addr)
-        self.to_addr = load_pub_key(to_addr)
+        self.from_addr = crypto.load_pub_key(from_addr)
+        self.to_addr = crypto.load_pub_key(to_addr)
         self.signature = signature
         self.prev_txid = prev_txid
 
@@ -21,8 +21,8 @@ class Input(object):
         return {
             "txid":self.txid,
             "amount":self.amount,
-            "from":save_key(self.from_addr),
-            "to":save_key(self.to_addr),
+            "from":crypto.save_key(self.from_addr),
+            "to":crypto.save_key(self.to_addr),
             "signature":self.signature,
             "prev_txid":self.prev_txid
         }

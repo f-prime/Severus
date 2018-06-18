@@ -1,5 +1,6 @@
 import tinydb
-from severus.blockchain.utils.crypto import load_pub_key
+from severus import Block, Transaction, Input, Output
+from severus.utils import crypto
 
 blocks = tinydb.TinyDB("blocks.db").table("blocks")
 wallet = tinydb.TinyDB("wallet.db").table("wallet")
@@ -21,10 +22,6 @@ def insert_block(block):
 
 def get_blocks():
     # Helps avoid circular imports
-    from severus.blockchain.Block import Block
-    from severus.blockchain.Transaction import Transaction
-    from severus.blockchain.Input import Input
-    from severus.blockchain.Output import Output 
    
     all_blocks = blocks.all()
     block_objects = []
@@ -36,29 +33,28 @@ def get_blocks():
             if data['type'] == "TRANSACTION":
                 for input_ in data['inputs']:
                     inputs.append(
-                        Input(
+                        Input.Input(
                             txid=input_['txid'],
                             amount=input_['amount'],
-                            from_addr=load_pub_key(input_['from']),
-                            to_addr=load_pub_key(input_['to']),
+                            from_addr=crypto.load_pub_key(input_['from']),
+                            to_addr=crypto.load_pub_key(input_['to']),
                             signature=input_['signature'],
                             prev_txid=input_['prev_txid']
                         )
                     )
                 for output in data['outputs']:
                     outputs.append(
-                        Output(
+                        Output.Output(
                             amount=output['amount'],
-                            to_addr=load_pub_key(output['to']),
-                            from_addr=load_pub_key(output['from']),
-                            signature=output['signature']
+                            to_addr=crypto.load_pub_key(output['to']),
+                            from_addr=crypto.load_pub_key(output['from'])
                         )
                     )
                 block_data.append(
-                    Transaction(
+                    Transaction.Transaction(
                         txid=data['txid'],
-                        from_addr=load_pub_key(data['from']),
-                        to_addr=load_pub_key(data['to']),
+                        from_addr=crypto.load_pub_key(data['from']),
+                        to_addr=crypto.load_pub_key(data['to']),
                         amount=data['amount'],
                         inputs=inputs,
                         outputs=outputs,
@@ -66,7 +62,7 @@ def get_blocks():
                     )
                 )
         block_objects.append(
-            Block(
+            Block.Block(
                 index=block['index'],
                 block_data=block_data,
                 previous_hash=block['previous'],

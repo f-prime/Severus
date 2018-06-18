@@ -1,9 +1,9 @@
 import tinydb
 import time
 import hashlib
-from severus.db import insert_block
-from severus.blockchain.utils.calculate_difficulty import calculate_difficulty
-from severus.blockchain.utils.verify_block import *
+from .utils import crypto, verify_block, calculate_difficulty
+from . import db
+
 
 class Block(object):
     def __init__(
@@ -12,7 +12,7 @@ class Block(object):
             block_data, 
             previous_hash, 
             proof_of_work, 
-            difficulty=calculate_difficulty(), 
+            difficulty=calculate_difficulty.calculate_difficulty(), 
             timestamp = time.time(),
             block_hash=None
             ):
@@ -22,7 +22,6 @@ class Block(object):
         self.block_data = block_data
         self.difficulty = difficulty
         self.proof_of_work = proof_of_work
-        self.block_data = block_data
         if block_hash:
             self.block_hash = block_hash
         else:
@@ -59,12 +58,13 @@ Proof of Work: {}
 
     def verify(self):
         return all([
-            verify_pow(self),
-            verify_block_order(self)
+            verify_block.verify_pow(self),
+            verify_block.verify_block_order(self),
+            verify_block.verify_transactions(self)
         ])
 
     def save(self):
         if not self.verify():
             raise Exception("Invalid Block")
     
-        insert_block(self)
+        db.insert_block(self)

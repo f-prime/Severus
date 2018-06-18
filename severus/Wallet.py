@@ -1,4 +1,4 @@
-from severus.db import wallet, blocks
+from . import db
 import rsa
 import base64
 
@@ -19,13 +19,13 @@ class Wallet(object):
             raise Exception(
                 "Both private key and public key must be set"
             )
-        wallet.insert({
+        db.wallet.insert({
             "public_key":self.public_key.decode(),
             "private_key":self.private_key.decode()
         })
 
     def all_addresses(self):
-        return wallet.all()
+        return db.wallet.all()
 
     def load(self):
         addresses = self.all_addresses()

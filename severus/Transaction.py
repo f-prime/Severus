@@ -1,5 +1,5 @@
-from severus.db import get_blocks
-from severus.blockchain.utils.crypto import save_key, load_pub_key
+from . import db
+from .utils import crypto
 import uuid
 
 class Transaction(object):
@@ -34,8 +34,8 @@ class Transaction(object):
         return {
             "type":self.type,
             "txid":self.txid,
-            "from":save_key(self.from_addr),
-            "to":save_key(self.to_addr),
+            "from":crypto.save_key(self.from_addr),
+            "to":crypto.save_key(self.to_addr),
             "amount":self.amount,
             "inputs":inputs,
             "outputs":outputs,
@@ -48,7 +48,7 @@ class Transaction(object):
         1. Check all blocks and make sure this txid has not been used in a previous input
         2. Checks signature
         """
-        blocks = get_blocks()
+        blocks = db.get_blocks()
         for block in blocks:
             for data in block.block_data:
                 if data.type == self.type:
