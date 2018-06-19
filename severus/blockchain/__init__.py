@@ -5,4 +5,4 @@ from .Output import Output
 from .Transaction import Transaction
 from .Wallet import Wallet
 from . import utils
-
+crypto = utils.crypto

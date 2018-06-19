@@ -16,10 +16,15 @@ def verify_pow(block):
     return False
 
 def verify_transactions(block):
+    severus_count = 0
     for transaction in block.block_data:
         if transaction.type == "TRANSACTION":
+            if transaction.from_addr == "severus":
+                severus_count += 1
+                if severus_count > 1:
+                    return False
             if not transaction.verify():
-                return False
+                return False   
     return True
 
 def verify_block_order(block):

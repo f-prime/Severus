@@ -1,6 +1,4 @@
 About
 =====
 
-Microblogging on the blockchain
-
-Blockchain implementation from scratch in Python 3
+Severus allows you to describe virtual "items" using JSON and store them on the blockchain.

@@ -72,5 +72,3 @@ def get_blocks():
         )   
     return block_objects
 
-def get_wallet():
-    pass

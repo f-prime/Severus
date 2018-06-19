@@ -11,11 +11,14 @@ class Block(object):
             previous_hash, 
             proof_of_work, 
             difficulty=None, 
-            timestamp=time.time(),
+            timestamp=None,
             block_hash=None
             ):
         self.index = index
-        self.timestamp = timestamp
+        if timestamp:
+            self.timestamp = timestamp
+        else:
+            self.timestamp = time.time()
         self.previous_hash = previous_hash
         self.block_data = block_data
         if difficulty != None:
@@ -58,11 +61,14 @@ Proof of Work: {}
                 self.proof_of_work)
 
     def verify(self):
-        return all([
+        all_checks = [
             verify_block.verify_pow(self),
             verify_block.verify_block_order(self),
             verify_block.verify_transactions(self)
-        ])
+        ]
+
+        print(all_checks)
+        return all(all_checks)
 
     def save(self):
         if not self.verify():

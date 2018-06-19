@@ -1,3 +1,7 @@
+wallet:
+	pipenv run python3 create_wallet.py
+miner:
+	pipenv run python3 run_miner.py
 cli:
 	pipenv run python3 run_cli.py
 shell:
