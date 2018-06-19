@@ -1,30 +1,31 @@
-from severus.db import blocks, wallet
-from severus.user import User
+from severus.blockchain import Wallet
+from severus.blockchain.utils.calculate_funds import calculate_funds
+from severus.blockchain import crypto
 import sys
 
+wallet = Wallet()
+wallet.load()
+
 def get_help(command):
-    print ("""Severus Commands
+    return """Severus Commands
 
 help
 getaddresses
 createaddress
 getbalances
-""")
+"""
 
 def get_addresses(command):
-    addresses = []
-    for address in wallet.all():
-        addresses.append(address['public_key'])
-    print ('\n'.join(addresses))
+    addresses = wallet.all_addresses()
+    return '\n'.join(addresses)
 
 def get_balances(command):
-    pass
+    return [calculate_funds(crypto.load_pub_key(address)) for address in wallet.all_addresses()]
 
 def create_address(command):
-    user = User.User()
-    new_user = user.create()
-    new_user.save()
-    print(new_user.public_key.decode())
+    w = wallet.create()
+    w.save()
+    return crypto.save_key(w.public_key)
 
 def main():
     commands = {
@@ -41,7 +42,7 @@ def main():
     command = sys.argv[1:]    
 
     if command[0] in commands:
-        commands[command[0]](command)
+        print(commands[command[0]](command))
 
 if __name__ == "__main__":
     main()

@@ -24,7 +24,7 @@ class Wallet(object):
 
         public_key = save_key(self.public_key)
         private_key = save_key(self.private_key)
-        for address in self.all_addresses():
+        for address in self.all_keys():
             if address['private_key'] == private_key or address['public_key'] == public_key:
                 raise Exception(
                     "Address is already exists."
@@ -35,11 +35,15 @@ class Wallet(object):
             "private_key":private_key
         })
 
-    def all_addresses(self):
+    def all_keys(self):
         return db.wallet.all()
 
+    def all_addresses(self):
+        all_keys = self.all_keys()
+        return [key['public_key'] for key in all_keys]
+
     def load(self):
-        addresses = self.all_addresses()
+        addresses = self.all_keys()
         if not addresses:
             raise Exception("No addresses exist.")
         self.private_key = load_priv_key(addresses[-1]['private_key'].encode())
