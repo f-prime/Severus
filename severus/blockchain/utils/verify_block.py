@@ -1,5 +1,5 @@
 import hashlib
-from . import calculate_difficulty
+from severus.blockchain.utils import calculate_difficulty
 from tinydb import Query
 from severus import db
 
