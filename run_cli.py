@@ -4,7 +4,11 @@ from severus.blockchain import crypto
 import sys
 
 wallet = Wallet()
-wallet.load()
+try:
+    wallet.load()
+except:
+    wallet = wallet.create()
+    wallet.save()
 
 def get_help(command):
     return """Severus Commands
@@ -20,7 +24,7 @@ def get_addresses(command):
     return '\n'.join(addresses)
 
 def get_balances(command):
-    return [calculate_funds(crypto.load_pub_key(address)) for address in wallet.all_addresses()]
+    return sum([calculate_funds(crypto.load_pub_key(address)) for address in wallet.all_addresses()])
 
 def create_address(command):
     w = wallet.create()
