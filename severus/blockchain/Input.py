@@ -1,4 +1,4 @@
-from .utils import crypto
+from severus.blockchain.utils import crypto
 
 class Input(object):
     def __init__(

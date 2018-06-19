@@ -1,1 +1,1 @@
-from . import db
+from severus import db

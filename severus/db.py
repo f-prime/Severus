@@ -1,6 +1,6 @@
 import tinydb
-from .blockchain import Block, Transaction, Input, Output
-from .blockchain.utils import crypto
+from severus.blockchain import Block, Transaction, Input, Output
+from severus.blockchain.utils import crypto
 
 blocks = tinydb.TinyDB("blocks.db").table("blocks")
 wallet = tinydb.TinyDB("wallet.db").table("wallet")

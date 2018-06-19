@@ -1,8 +1,8 @@
-from .. import db
+from severus import db
 import rsa
 import base64
-from .utils.crypto import load_priv_key, load_pub_key, save_key
-from .utils.calculate_funds import calculate_funds
+from severus.blockchain.utils.crypto import load_priv_key, load_pub_key, save_key
+from severus.blockchain.utils.calculate_funds import calculate_funds
 
 class Wallet(object):
     def __init__(self, private_key=None, public_key=None):

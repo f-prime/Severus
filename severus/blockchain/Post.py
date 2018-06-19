@@ -1,2 +1,0 @@
-class Post(object):
-    pass

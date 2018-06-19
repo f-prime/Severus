@@ -1,6 +1,6 @@
 import time
 import hashlib
-from .utils import verify_block, calculate_difficulty
+from severus.blockchain.utils import verify_block, calculate_difficulty
 from severus import db
 
 class Block(object):

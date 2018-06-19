@@ -1,6 +1,6 @@
-from .. import db
-from .utils import crypto
-from .utils import calculate_funds
+from severus import db
+from severus.blockchain.utils import crypto
+from severus.blockchain.utils import calculate_funds
 
 class Transaction(object):
     def __init__(
