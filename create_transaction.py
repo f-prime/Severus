@@ -1,19 +1,18 @@
 import uuid
-from severus.blockchain import Output, Transaction, Block
-from severus.blockchain.utils.crypto import get_keys, save_key, sign
+import severus
 
-pub, priv = get_keys()
+pub, priv = severus.crypto.get_keys()
 txid = uuid.uuid4().hex
-signature = sign(txid, priv)
-pub, priv = save_key(pub), save_key(priv)
+signature = severus.crypto.sign(txid, priv)
+pub, priv = severus.crypto.save_key(pub), severus.crypto.save_key(priv)
 
-output = Output(
+output = severus.Output(
     amount=25, 
     to_addr=pub,
     from_addr="severus", 
 )
 
-transaction = Transaction(
+transaction = severus.Transaction(
     txid=txid,
     to_addr=pub,
     from_addr="severus",
@@ -24,7 +23,7 @@ transaction = Transaction(
 )
 
 
-block = Block(
+block = severus.Block(
     index=0,
     block_data=[transaction],
     previous_hash="aac0f041108e7c9af04aa633a56d73e7c63d7a062a349f505bcfe29c28581078",

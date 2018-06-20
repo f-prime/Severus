@@ -1,9 +1,8 @@
 import time
-import math
-import severus
+from severus import db
 
 def calculate_difficulty(block=None):
-    all_blocks = severus.db.get_blocks()
+    all_blocks = db.get_blocks()
     if not block:
         num_blocks = len(all_blocks)
         if num_blocks == 0:

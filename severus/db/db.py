@@ -1,6 +1,5 @@
 import tinydb
-from severus.blockchain import Block, Transaction, Input, Output
-from severus.blockchain.utils import crypto
+import severus
 
 blocks = tinydb.TinyDB("blocks.db").table("blocks")
 wallet = tinydb.TinyDB("wallet.db").table("wallet")
@@ -42,17 +41,17 @@ def get_blocks():
                     )
                 for output in data['outputs']:
                     outputs.append(
-                        Output(
+                        severus.Output(
                             amount=output['amount'],
-                            to_addr=crypto.load_pub_key(output['to']),
-                            from_addr=crypto.load_pub_key(output['from'])
+                            to_addr=severus.crypto.load_pub_key(output['to']),
+                            from_addr=severus.crypto.load_pub_key(output['from'])
                         )
                     )
                 block_data.append(
-                    Transaction(
+                    severus.Transaction(
                         txid=data['txid'],
-                        from_addr=crypto.load_pub_key(data['from']),
-                        to_addr=crypto.load_pub_key(data['to']),
+                        from_addr=severus.crypto.load_pub_key(data['from']),
+                        to_addr=severus.crypto.load_pub_key(data['to']),
                         amount=data['amount'],
                         inputs=inputs,
                         outputs=outputs,
@@ -60,7 +59,7 @@ def get_blocks():
                     )
                 )
         block_objects.append(
-            Block(
+            severus.Block(
                 index=block['index'],
                 block_data=block_data,
                 previous_hash=block['previous'],

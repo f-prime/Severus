@@ -1,6 +1,4 @@
-from severus import db
-from severus.blockchain.utils import crypto
-from severus.blockchain.utils import calculate_funds
+import severus
 
 class Transaction(object):
     def __init__(
@@ -34,8 +32,8 @@ class Transaction(object):
         return {
             "type":self.type,
             "txid":self.txid,
-            "from":crypto.save_key(self.from_addr),
-            "to":crypto.save_key(self.to_addr),
+            "from":severus.crypto.save_key(self.from_addr),
+            "to":severus.crypto.save_key(self.to_addr),
             "amount":self.amount,
             "inputs":inputs,
             "outputs":outputs,
@@ -51,7 +49,7 @@ class Transaction(object):
         """
  
 
-        blocks = db.get_blocks()
+        blocks = severus.db.get_blocks()
         for block in blocks:
             for data in block.block_data:
                 if data.type == self.type:
@@ -63,11 +61,11 @@ class Transaction(object):
             if self.amount > 25:
                 return False
         else:
-            total_funds = calculate_funds.calculate_funds(self.from_addr) 
+            total_funds = severus.calculate_funds(self.from_addr) 
             if total_funds < self.amount:
                 return False
 
-        signed = crypto.check_sig(self.txid, self.from_addr, self.signature)
+        signed = severus.crypto.check_sig(self.txid, self.from_addr, self.signature)
         return signed
 
             

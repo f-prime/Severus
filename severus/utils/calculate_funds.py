@@ -1,4 +1,4 @@
-import severus
+from severus import db
 
 def check_spent(data, blocks):
     for block in blocks:
@@ -11,7 +11,7 @@ def check_spent(data, blocks):
 
 def calculate_funds(public_key):
     total = 0
-    blocks = severus.db.get_blocks()
+    blocks = db.get_blocks()
     for block in blocks:
         for data in block.block_data:
             if data.type == "TRANSACTION":

@@ -1,7 +1,6 @@
 import time
 import hashlib
-from severus.blockchain.utils import verify_block, calculate_difficulty
-from severus import db
+import severus
 
 class Block(object):
     def __init__(
@@ -24,7 +23,7 @@ class Block(object):
         if difficulty != None:
             self.difficulty = difficulty
         else:
-            self.difficulty = calculate_difficulty.calculate_difficulty()
+            self.difficulty = severus.calculate_difficulty()
         self.proof_of_work = proof_of_work
         if block_hash:
             self.block_hash = block_hash
@@ -62,9 +61,9 @@ Proof of Work: {}
 
     def verify(self):
         all_checks = [
-            verify_block.verify_pow(self),
-            verify_block.verify_block_order(self),
-            verify_block.verify_transactions(self)
+            severus.verify_block.verify_pow(self),
+            severus.verify_block.verify_block_order(self),
+            severus.verify_block.verify_transactions(self)
         ]
 
         print(all_checks)
@@ -74,4 +73,4 @@ Proof of Work: {}
         if not self.verify():
             raise Exception("Invalid Block")
     
-        db.insert_block(self)
+        severus.db.insert_block(self)
