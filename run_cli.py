@@ -1,9 +1,7 @@
-from severus.blockchain import Wallet
-from severus.blockchain.utils.calculate_funds import calculate_funds
-from severus.blockchain import crypto
 import sys
+import severus
 
-wallet = Wallet()
+wallet = severus.Wallet()
 try:
     wallet.load()
 except:
@@ -24,12 +22,12 @@ def get_addresses(command):
     return '\n'.join(addresses)
 
 def get_balances(command):
-    return sum([calculate_funds(crypto.load_pub_key(address)) for address in wallet.all_addresses()])
+    return sum([severus.calculate_funds(severus.crypto.load_pub_key(address)) for address in wallet.all_addresses()])
 
 def create_address(command):
     w = wallet.create()
     w.save()
-    return crypto.save_key(w.public_key)
+    return severus.crypto.save_key(w.public_key)
 
 def main():
     commands = {
