@@ -10,15 +10,23 @@ wallet.load()
 def get_nonce():
     return random.randint(0, 10*10**10)
 
+def get_prev_block_hash():
+    previous_block = severus.db.get_last_block()
+    if not previous_block:
+        return ""
+    return previous_block.block_hash
+
 def mine():
     start_nonce = get_nonce()
     difficulty = severus.calculate_difficulty()
     print("Mining at difficulty", difficulty)
     last_check = time.time()
     hashes = 0
+    previous_hash = get_prev_block_hash()         
     while True:
         if time.time() - last_check >= 1:
             new_diff = severus.calculate_difficulty()
+            previous_hash = get_prev_block_hash()
             if difficulty != new_diff:
                 print("New Diff", new_diff)
                 difficulty = new_diff
@@ -27,7 +35,7 @@ def mine():
             print(hashes, "hashes per second")
             hashes = 0
         hashes += 1
-        check = hashlib.sha512(str(start_nonce).encode()).hexdigest()
+        check = hashlib.sha512((previous_hash + str(start_nonce)).encode()).hexdigest()
         if check.startswith(difficulty * "0"):
             print("Found match... verifying")
             previous = severus.db.get_last_block()
@@ -62,13 +70,13 @@ def mine():
                 proof_of_work=str(start_nonce)
             )
 
-            print("Found block", block)
-                       
+            print("Found block", block) 
             try:
                 block.save()
             except Exception as e:
                 print(e)
                 start_nonce = get_nonce()
+            previous_hash = get_prev_block_hash()
         start_nonce += 1
 
 if __name__ == "__main__":

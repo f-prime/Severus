@@ -33,7 +33,7 @@ def build_block(block):
                         from_addr=crypto.load_pub_key(input_['from']),
                         to_addr=crypto.load_pub_key(input_['to']),
                         signature=input_['signature'],
-                        prev_txid=input_['prev_txid']
+                        output_id=input_['output_id']
                     )
                 )
             for output in data['outputs']:
@@ -41,7 +41,8 @@ def build_block(block):
                     severus.Output(
                         amount=output['amount'],
                         to_addr=severus.crypto.load_pub_key(output['to']),
-                        from_addr=severus.crypto.load_pub_key(output['from'])
+                        from_addr=severus.crypto.load_pub_key(output['from']),
+                        output_id=output['id']
                     )
                 )
             block_data.append(
@@ -79,5 +80,4 @@ def get_last_block():
     if not last_block:
         return None
     return build_block(last_block[-1])
-
 

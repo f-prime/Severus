@@ -40,8 +40,14 @@ class Transaction(object):
             "signature":self.signature
         }
 
-    def create(from_addr, to_addr, amount):
+    def create(to_addr, amount):
+        wallet = severus.Wallet()
+        wallet.load()
+        from_addr = wallet.public_key
         all_blocks = severus.db.get_blocks()
+        funds = severus.calculate_funds(from_addr)
+        if funds < amount:
+            raise Exception("You do not have enough funds in your wallet.")
         for block in all_blocks:
             pass
 

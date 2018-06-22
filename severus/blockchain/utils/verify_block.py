@@ -4,8 +4,13 @@ from tinydb import Query
 
 def verify_pow(block):
     # Also need to verify that PoW is unique
+    previous_block = severus.db.get_last_block()
+    if not previous_block:
+        previous_hash = ""
+    else:
+        previous_hash = previous_block.block_hash
     query = Query()
-    proof_of_work = block.proof_of_work
+    proof_of_work = "{}{}".format(previous_hash, block.proof_of_work)
     if severus.db.blocks.search(query.pow == proof_of_work):
         return False
     difficulty = severus.calculate_difficulty(block=block)

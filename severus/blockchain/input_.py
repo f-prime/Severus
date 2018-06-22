@@ -7,7 +7,7 @@ class Input(object):
             amount, 
             from_addr, 
             to_addr, 
-            prev_txid, 
+            output_id, 
             signature):
         
         self.txid = txid
@@ -15,7 +15,7 @@ class Input(object):
         self.from_addr = severus.crypto.load_pub_key(from_addr)
         self.to_addr = severus.crypto.load_pub_key(to_addr)
         self.signature = signature
-        self.prev_txid = prev_txid
+        self.output_id = output_id
 
     def to_dict(self):
         return {
@@ -24,6 +24,6 @@ class Input(object):
             "from":severus.crypto.save_key(self.from_addr),
             "to":severus.crypto.save_key(self.to_addr),
             "signature":self.signature,
-            "prev_txid":self.prev_txid
+            "output_id":self.output_id
         }
 
