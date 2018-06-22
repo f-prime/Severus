@@ -1,6 +1,6 @@
 import hashlib
-from tinydb import Query
 import severus
+from tinydb import Query
 
 def verify_pow(block):
     # Also need to verify that PoW is unique
@@ -30,12 +30,11 @@ def verify_block_order(block):
     """
     Verify block comes after (in time, index, previous hash) to previous block
     """
-    all_blocks = severus.db.get_blocks()
+    prev_block = severus.db.get_last_block()
 
-    if not all_blocks:
+    if not prev_block:
         return True
 
-    prev_block = all_blocks[-1]
     if prev_block.block_hash != block.previous_hash:
         return False
     

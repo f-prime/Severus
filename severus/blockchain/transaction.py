@@ -40,7 +40,11 @@ class Transaction(object):
             "signature":self.signature
         }
 
-     
+    def create(from_addr, to_addr, amount):
+        all_blocks = severus.db.get_blocks()
+        for block in all_blocks:
+            pass
+
     def verify(self):
         """
         1. Check all blocks and make sure this txid has not been used in a previous input

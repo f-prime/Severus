@@ -1,14 +1,11 @@
 import time
-import math
-import severus
+from severus import db
 
 def calculate_difficulty(block=None):
-    all_blocks = severus.db.get_blocks()
+    previous_block = db.get_last_block()
     if not block:
-        num_blocks = len(all_blocks)
-        if num_blocks == 0:
+        if not previous_block:
             return 0
-        previous_block = all_blocks[-1]
         prev_difficulty = previous_block.difficulty
         if prev_difficulty == 0:
             prev_difficulty += 1
@@ -19,7 +16,6 @@ def calculate_difficulty(block=None):
         if block.index == 0:
             return 0
         
-        previous_block = all_blocks[block.index - 1]
         previous_timestamp = previous_block.timestamp
         prev_difficulty = previous_block.difficulty
 

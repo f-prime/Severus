@@ -18,6 +18,11 @@ def mine():
     hashes = 0
     while True:
         if time.time() - last_check >= 1:
+            new_diff = severus.calculate_difficulty()
+            if difficulty != new_diff:
+                print("New Diff", new_diff)
+                difficulty = new_diff
+                start_nonce = get_nonce()
             last_check = time.time()
             print(hashes, "hashes per second")
             hashes = 0
@@ -25,9 +30,8 @@ def mine():
         check = hashlib.sha512(str(start_nonce).encode()).hexdigest()
         if check.startswith(difficulty * "0"):
             print("Found match... verifying")
-            all_blocks = severus.db.get_blocks()
-            if all_blocks:
-                previous = all_blocks[-1]
+            previous = severus.db.get_last_block()
+            if previous:
                 previous_hash = previous.block_hash
                 index = previous.index + 1
             else:
@@ -59,13 +63,7 @@ def mine():
             )
 
             print("Found block", block)
-            
-            new_diff = severus.calculate_difficulty()
-            if difficulty != new_diff:
-                print("New Diff", new_diff)
-                difficulty = new_diff
-                start_nonce = get_nonce()
-           
+                       
             try:
                 block.save()
             except Exception as e:
