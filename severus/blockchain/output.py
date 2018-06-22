@@ -4,12 +4,14 @@ import uuid
 class Output(object):
     def __init__(
             self, 
+            txid,
             amount, 
             to_addr, 
             from_addr,
             output_id=None
             ):
         
+        self.txid = txid
         self.amount = amount
         self.to_addr = severus.crypto.load_pub_key(to_addr)
         self.from_addr = severus.crypto.load_pub_key(from_addr)
@@ -19,6 +21,7 @@ class Output(object):
 
     def to_dict(self):
         return {
+            "txid":self.txid,
             "amount":self.amount,
             "to":severus.crypto.save_key(self.to_addr),
             "from":severus.crypto.save_key(self.from_addr),

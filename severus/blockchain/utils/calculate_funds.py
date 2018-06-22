@@ -1,4 +1,4 @@
-from severus import db
+import severus
 
 def check_spent(output, blocks):
     for block in blocks:
@@ -10,7 +10,8 @@ def check_spent(output, blocks):
     return False
 
 def get_unspent_tx(public_key):
-    blocks = db.get_blocks()
+    public_key = severus.crypto.load_pub_key(public_key)
+    blocks = severus.db.get_blocks()
     for block in blocks:
         for data in block.block_data:
             if data.type == "TRANSACTION":
@@ -18,7 +19,7 @@ def get_unspent_tx(public_key):
                 for output in data.outputs:
                     if output.to_addr == public_key:
                         if not is_spent_check:
-                            if check_spent(output, db.get_blocks()):
+                            if check_spent(output, severus.db.get_blocks()):
                                 break
                             is_spent_check = True
                         yield output

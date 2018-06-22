@@ -27,18 +27,18 @@ def build_block(block):
         if data['type'] == "TRANSACTION":
             for input_ in data['inputs']:
                 inputs.append(
-                    Input(
+                    severus.Input(
                         txid=input_['txid'],
                         amount=input_['amount'],
-                        from_addr=crypto.load_pub_key(input_['from']),
-                        to_addr=crypto.load_pub_key(input_['to']),
-                        signature=input_['signature'],
+                        from_addr=severus.crypto.load_pub_key(input_['from']),
+                        to_addr=severus.crypto.load_pub_key(input_['to']),
                         output_id=input_['output_id']
                     )
                 )
             for output in data['outputs']:
                 outputs.append(
                     severus.Output(
+                        txid=output['txid'],
                         amount=output['amount'],
                         to_addr=severus.crypto.load_pub_key(output['to']),
                         from_addr=severus.crypto.load_pub_key(output['from']),

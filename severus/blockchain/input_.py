@@ -3,18 +3,17 @@ import severus
 class Input(object):
     def __init__(
             self,
-            txid, 
-            amount, 
+            txid,
+            amount,
             from_addr, 
             to_addr, 
             output_id, 
-            signature):
-        
+        ):
+
         self.txid = txid
         self.amount = amount
         self.from_addr = severus.crypto.load_pub_key(from_addr)
         self.to_addr = severus.crypto.load_pub_key(to_addr)
-        self.signature = signature
         self.output_id = output_id
 
     def to_dict(self):
@@ -23,7 +22,6 @@ class Input(object):
             "amount":self.amount,
             "from":severus.crypto.save_key(self.from_addr),
             "to":severus.crypto.save_key(self.to_addr),
-            "signature":self.signature,
             "output_id":self.output_id
         }
 

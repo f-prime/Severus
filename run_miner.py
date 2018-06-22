@@ -3,6 +3,7 @@ import hashlib
 import time
 import uuid
 import severus
+import sys
 
 wallet = severus.Wallet()
 wallet.load()
@@ -45,13 +46,15 @@ def mine():
             else:
                 index = 0
                 previous_hash = ""
+            
+            txid = uuid.uuid4().hex
+
             output = severus.Output(
                 amount=25,
                 to_addr=wallet.public_key,
-                from_addr="severus"
+                from_addr="severus",
+                txid=txid
             )
-            
-            txid = uuid.uuid4().hex
 
             transaction = severus.Transaction(
                 txid=txid,
@@ -62,7 +65,7 @@ def mine():
                 outputs=[output],
                 signature=severus.crypto.sign(txid, wallet.private_key)
             )
-            
+           
             block = severus.Block(
                 index=index,
                 block_data=[transaction],
@@ -73,6 +76,7 @@ def mine():
             print("Found block", block) 
             try:
                 block.save()
+                sys.exit()
             except Exception as e:
                 print(e)
                 start_nonce = get_nonce()

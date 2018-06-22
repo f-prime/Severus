@@ -34,13 +34,18 @@ def main():
         "help":get_help,
         "getaddresses":get_addresses,
         "createaddress":create_address,
-        "getbalances":get_balances
+        "getbalances":get_balances,
+        "exit":lambda x: sys.exit()
     }
 
     if len(sys.argv) < 2:
-        get_help(["help"])
-        sys.exit()
-
+        while True:
+            command = input("> ")
+            command = command.split()
+            if len(command) > 0:
+                if command[0] in commands:
+                    print(commands[command[0]](command))
+    
     command = sys.argv[1:]    
 
     if command[0] in commands:
