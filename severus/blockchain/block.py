@@ -64,6 +64,22 @@ Miner: {}
                 self.proof_of_work,
                 self.miner)
 
+    def to_dict(self):
+        block_data = []
+        for item in self.block_data:
+            block_data.append(item.to_dict())
+
+        return {
+            "index":self.index,
+            "timestamp":self.timestamp,
+            "previous":self.previous_hash,
+            "data":block_data,
+            "hash":self.block_hash,
+            "difficulty":self.difficulty,
+            "pow":self.proof_of_work,
+            "miner":self.miner
+        }
+
     def verify(self):
         all_checks = [
             severus.verify_block.verify_pow(self),

@@ -8,4 +8,7 @@ from .blockchain.utils.calculate_difficulty import calculate_difficulty
 from .blockchain.utils.calculate_funds import calculate_funds, get_unspent_tx
 from .blockchain.utils import crypto
 from .blockchain.utils import verify_block
-
+from .networking.peer import Peer
+from .networking.listen import listen
+from .networking.responses import greet, getallpeers, getblock
+from .networking import config

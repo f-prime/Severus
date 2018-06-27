@@ -3,22 +3,24 @@ import severus
 
 blocks = tinydb.TinyDB("blocks.db").table("blocks")
 wallet = tinydb.TinyDB("wallet.db").table("wallet")
+peers  = tinydb.TinyDB("peers.db").table("peers")
+
+def insert_peer(peer):
+    peers.insert(peer.to_dict())
 
 def insert_block(block):
-    block_data = []
-    for item in block.block_data:
-        block_data.append(item.to_dict())
-    
-    blocks.insert({
-        "index":block.index,
-        "timestamp":block.timestamp,
-        "previous":block.previous_hash,
-        "data":block_data,
-        "hash":block.block_hash,
-        "difficulty":block.difficulty,
-        "pow":block.proof_of_work,
-        "miner":block.miner
-    })
+    blocks.insert(block.to_dict())    
+
+def get_peers():
+    peers = []
+    all_peers = peers.all()
+    for peer in all_peers:
+        peers.append(severus.Peer(peer['host'], peer['port']))
+    return peers
+
+def remove_peer(peer):
+    query = tinydb.Query()
+    peers.remove(query.host == peer.host and query.port == peer.port)
 
 def build_block(block):
     inputs = []
@@ -73,6 +75,10 @@ def get_blocks():
     all_blocks = blocks.all()
     for block in all_blocks:
         yield build_block(block)
+
+def get_block(index):
+    query = tinydb.Query()
+    return blocks.get(query.index == index)
 
 def get_num_blocks():
     return len(blocks.all())
