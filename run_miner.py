@@ -38,7 +38,7 @@ def mine():
         hashes += 1
         check = hashlib.sha512((previous_hash + str(start_nonce)).encode()).hexdigest()
         if check.startswith(difficulty * "0"):
-            print("Found match... verifying")
+            #print("Found match... verifying")
             previous = severus.db.get_last_block()
             if previous:
                 previous_hash = previous.block_hash
@@ -70,15 +70,14 @@ def mine():
                 index=index,
                 block_data=[transaction],
                 previous_hash=previous_hash,
-                proof_of_work=str(start_nonce)
+                proof_of_work=str(start_nonce),
+                miner=severus.crypto.save_key(wallet.public_key)
             )
 
-            print("Found block", block) 
             try:
                 block.save()
-                sys.exit()
+                print("Found block", block) 
             except Exception as e:
-                print(e)
                 start_nonce = get_nonce()
             previous_hash = get_prev_block_hash()
         start_nonce += 1

@@ -9,6 +9,7 @@ class Block(object):
             block_data, 
             previous_hash, 
             proof_of_work, 
+            miner,
             difficulty=None, 
             timestamp=None,
             block_hash=None
@@ -25,19 +26,21 @@ class Block(object):
         else:
             self.difficulty = severus.calculate_difficulty()
         self.proof_of_work = proof_of_work
+        self.miner = miner
         if block_hash:
             self.block_hash = block_hash
         else:
             self.block_hash = self.hash_block()
         
     def hash_block(self):
-        data = "{}{}{}{}{}{}".format(
+        data = "{}{}{}{}{}{}{}".format(
                 self.index, 
                 self.timestamp, 
                 self.previous_hash, 
                 self.block_data, 
                 self.difficulty, 
-                self.proof_of_work)
+                self.proof_of_work,
+                self.miner)
         
         return hashlib.sha256(data.encode()).hexdigest()
 
@@ -50,6 +53,7 @@ Data: {}
 Hash: {}
 Difficulty: {}
 Proof of Work: {}
+Miner: {}
         """.format(
                 self.index, 
                 self.timestamp, 
@@ -57,7 +61,8 @@ Proof of Work: {}
                 [bd.to_dict() for bd in self.block_data], 
                 self.block_hash, 
                 self.difficulty, 
-                self.proof_of_work)
+                self.proof_of_work,
+                self.miner)
 
     def verify(self):
         all_checks = [
@@ -65,8 +70,7 @@ Proof of Work: {}
             severus.verify_block.verify_block_order(self),
             severus.verify_block.verify_transactions(self)
         ]
-
-        print(all_checks)
+        
         return all(all_checks)
 
     def save(self):

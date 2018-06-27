@@ -11,8 +11,6 @@ def verify_pow(block):
         previous_hash = previous_block.block_hash
     query = Query()
     proof_of_work = "{}{}".format(previous_hash, block.proof_of_work)
-    if severus.db.blocks.search(query.pow == proof_of_work):
-        return False
     difficulty = severus.calculate_difficulty(block=block)
     hash_check = hashlib.sha512(proof_of_work.encode()).hexdigest()
     if hash_check.startswith("0" * difficulty):

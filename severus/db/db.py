@@ -16,7 +16,8 @@ def insert_block(block):
         "data":block_data,
         "hash":block.block_hash,
         "difficulty":block.difficulty,
-        "pow":block.proof_of_work
+        "pow":block.proof_of_work,
+        "miner":block.miner
     })
 
 def build_block(block):
@@ -63,7 +64,8 @@ def build_block(block):
         timestamp=block['timestamp'],
         difficulty=block['difficulty'],
         proof_of_work=block['pow'],
-        block_hash=block['hash']
+        block_hash=block['hash'],
+        miner=block['miner']
     )
 
 
