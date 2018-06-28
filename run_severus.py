@@ -14,11 +14,15 @@ def is_relay():
         _, __ = s.accept()
         _.close()
     port = random.randint(5000, 9999)
-    ip = requests.get("https://bot.whatismyipaddress.com").content
+    try:
+        ip = requests.get("https://bot.whatismyipaddress.com").content.decode()
+    except:
+        ip = input("Could not get external IP address... what is it? ")
     while port == severus.config.port:
         port = random.randint(5000, 9999)
     t = threading.Thread(target=listen, args=(port,))
     t.start()
+    time.sleep(3) # Give thread time to start socket
     s = socket.socket()
     try:
         s.settimeout(5)
