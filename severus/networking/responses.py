@@ -1,7 +1,7 @@
 import severus
 import json
 
-def respond(obj, ip, data):
+def respond(obj, data):
     obj.send(json.dumps(data).encode())
 
 def greet(obj, ip, data):
