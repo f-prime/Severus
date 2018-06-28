@@ -10,11 +10,12 @@ def handle(obj, data):
         "getblock":severus.getblock,
         "greet":severus.greet
     }
-    data = data.decode().replace("'", '"')
+    data = data.decode() 
     try:
         data = json.loads(data)
-    except:
-        print("Invalid JSON {}".format(data))
+        print(data)
+    except Exception as e:
+        print("Invalid JSON {} ({})".format(data, e))
         obj.close()
         return
 
