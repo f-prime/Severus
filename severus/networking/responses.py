@@ -12,7 +12,7 @@ def greet(obj, data):
     host = data.get("host")
     port = data.get("port")
     peer = severus.Peer(host, port)
-    if peer.is_alive():
+    if peer.is_alive() and host != severus.config.host and port != severus.config.port:
         peer.save()
     respond(obj, {
         "host":severus.config.host,

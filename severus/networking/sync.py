@@ -8,7 +8,7 @@ def sync():
     peers = severus.db.get_peers()
     usable_peer = None
     for peer in peers:
-        if peer.is_alive():
+        if peer.host != severus.config.host and peer.port != severus.config.port and peer.is_alive():
             usable_peer = peer
             break
     else:

@@ -10,3 +10,5 @@ transaction:
 	pipenv run python3 create_transaction.py
 fish:
 	pipenv run fish
+severusd:
+	pipenv run python3 run_severus.py
