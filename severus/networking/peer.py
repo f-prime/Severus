@@ -1,5 +1,6 @@
 import severus
 import socket
+import json
 
 class Peer(object):
     def __init__(self, host, port):
@@ -24,7 +25,7 @@ class Peer(object):
         s.close()
         return True
 
-    def send(self, data):
+    def send(self, message):
         s = socket.socket()
         try:
             s.settimeout(5)
@@ -32,8 +33,15 @@ class Peer(object):
         except:
             s.close()
             raise Exception("Peer is not alive")
-        s.send(data)
+        s.send(message.to_json())
+        response = ""
+        while True:
+            resp = s.recv(1024)
+            if not resp:
+                break
+            response += resp.decode()
         s.close()
+        return json.loads(response)
 
     def remove(self):
         severus.db.remove_peer(self)

@@ -11,4 +11,6 @@ from .blockchain.utils import verify_block
 from .networking.peer import Peer
 from .networking.listen import listen
 from .networking.responses import greet, getallpeers, getblock
+from .networking.message import Message
+from .networking.sync import sync
 from .networking import config

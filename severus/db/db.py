@@ -12,11 +12,11 @@ def insert_block(block):
     blocks.insert(block.to_dict())    
 
 def get_peers():
-    peers = []
+    peer_objs = []
     all_peers = peers.all()
     for peer in all_peers:
-        peers.append(severus.Peer(peer['host'], peer['port']))
-    return peers
+        peer_objs.append(severus.Peer(peer['host'], peer['port']))
+    return peer_objs
 
 def remove_peer(peer):
     query = tinydb.Query()

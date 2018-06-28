@@ -32,4 +32,4 @@ def getblock(obj, data):
     """
     index = data.get("index")
     block = severus.db.get_block(index)
-    respond(obj, block)
+    respond(obj, {"block":block})

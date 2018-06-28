@@ -1,3 +1,8 @@
 import severus
+import _thread as thread
 
-severus.listen()
+thread.start_new_thread(severus.listen, ())
+severus.sync()
+
+while True:
+    pass
