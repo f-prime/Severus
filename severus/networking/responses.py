@@ -11,11 +11,12 @@ def greet(obj, ip, data):
     """
     host = ip[0]
     port = ip[1]
+    print("greet", host, port)
     peer = severus.Peer(host, port)
     if peer.is_alive() and host != severus.config.host and port != severus.config.port:
         peer.save()
     respond(obj, {
-        "message":"Hello"
+        "message":"Greetings"
     })
 
 def getallpeers(obj, ip, data):
