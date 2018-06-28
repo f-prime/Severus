@@ -10,7 +10,7 @@ def handle(obj, data):
         "getblock":severus.getblock,
         "greet":severus.greet
     }
-    data = data.decode() 
+    data = data.decode().replace("'", '"')
     try:
         data = json.loads(data)
     except:
