@@ -10,8 +10,7 @@ def greet(obj, ip, data):
     Receives host and port of peer and responds with own host and port
     """
     host = ip[0]
-    port = ip[1]
-    print("greet", host, port)
+    port = data.get("port")
     peer = severus.Peer(host, port)
     if peer.is_alive() and host != severus.config.host and port != severus.config.port:
         peer.save()
