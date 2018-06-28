@@ -4,7 +4,7 @@ import time
 import _thread as thread
 import json
 
-def handle(obj, data):
+def handle(obj, ip, data):
     commands = {
         "getallpeers":severus.getallpeers,
         "getblock":severus.getblock,
@@ -20,7 +20,7 @@ def handle(obj, data):
         return
 
     if data.get("command") in commands:
-        commands[data["command"]](obj, data)
+        commands[data["command"]](obj, ip, data)
     obj.close()
 
 def listen():
@@ -40,4 +40,4 @@ def listen():
         while True:
             obj, ip = s.accept()
             data = obj.recv(1024)
-            thread.start_new_thread(handle, (obj,data))
+            thread.start_new_thread(handle, (obj, ip, data))

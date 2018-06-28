@@ -18,9 +18,8 @@ def sync():
        
     greet = severus.Message(
         command="greet",
-        host=severus.config.host,
-        port=severus.config.port
     )
+
     usable_peer.send(greet)
 
     get_peers = severus.Message(
