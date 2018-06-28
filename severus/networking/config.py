@@ -1,8 +1,8 @@
 import severus
 
-host = ""
+host = "0.0.0.0"
 port = 7373
 default_peer = severus.Peer(
-    host="127.0.0.1",
+    host="167.99.15.194",
     port=7373
 )
