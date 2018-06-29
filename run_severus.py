@@ -37,13 +37,23 @@ if is_relay():
     severus.config.is_relay = True
     print("Relay Node")
     thread.start_new_thread(severus.listen, ())
-    severus.sync()
+    synced = False
+    while not synced:
+        try:
+            severus.sync()
+            synced = True
+        except Exception as e:
+            print(e)
+            time.sleep(30)
     while True:
         pass
 else:
     print("Leech node")
     severus.config.is_relay = False
     while True:
-        severus.sync()
+        try:
+            severus.sync()
+        except Exception as e:
+            print(e)
         time.sleep(30)
 
