@@ -15,7 +15,7 @@ def get_peers():
     peer_objs = []
     all_peers = peers.all()
     for peer in all_peers:
-        peer_objs.append(severus.Peer(peer['host'], peer['port']))
+        peer_objs.append(severus.Peer(host=peer['host'], port=peer['port']))
     return peer_objs
 
 def remove_peer(peer):

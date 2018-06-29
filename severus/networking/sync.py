@@ -11,6 +11,8 @@ def sync():
         if peer.host != severus.config.host and peer.port != severus.config.port and peer.is_alive():
             usable_peer = peer
             break
+        else:
+            peer.remove()
     else:
         usable_peer = severus.config.default_peer
         if not usable_peer.is_alive():
@@ -30,7 +32,9 @@ def sync():
 
     peers = usable_peer.send(get_peers)
 
-    print(peers)
+    for peer in peers['peers']:
+        peer = severus.Peer(host=peer['host'], port=peer['port'])
+        peer.save()
 
     while True:
         message = severus.Message(
@@ -42,5 +46,11 @@ def sync():
         if not response['block']:
             print("All block downloaded.")
             break
+             
+        block = severus.db.build_block(response['block'])
+        if block.verify():
+            print(block)
+            block.save()
+        else:
+            raise Exception("Block invalid")
         index += 1
-        print(response)
