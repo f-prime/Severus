@@ -13,6 +13,9 @@ class Peer(object):
             "port":self.port
         }
 
+    def __str__(self):
+        return "{}:{}".format(self.host, self.port)
+
     def is_alive(self):
         s = socket.socket()
         try: 

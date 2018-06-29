@@ -15,6 +15,7 @@ def greet(obj, ip, data):
     if is_relay:
         peer = severus.Peer(host, port)
         if peer.is_alive() and host != severus.config.host and port != severus.config.port:
+            print(peer, "Saved")
             peer.save()
     respond(obj, {
         "message":"Greetings"

@@ -12,6 +12,7 @@ def sync():
             usable_peer = peer
             break
         else:
+            print(peer, "is dead")
             peer.remove()
     else:
         usable_peer = severus.config.default_peer
@@ -23,7 +24,7 @@ def sync():
         port=severus.config.port,
         is_relay=severus.config.is_relay
     )
-
+    print("Usable Peer:", usable_peer)
     usable_peer.send(greet)
 
     get_peers = severus.Message(
@@ -34,6 +35,7 @@ def sync():
 
     for peer in peers['peers']:
         peer = severus.Peer(host=peer['host'], port=peer['port'])
+        print("Saved peer". peer)
         peer.save()
 
     while True:
