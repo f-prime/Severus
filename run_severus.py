@@ -37,7 +37,6 @@ if is_relay():
     severus.config.is_relay = True
     print("Relay Node")
     thread.start_new_thread(severus.listen, ())
-    time.sleep(3) # Give thread time to start socket
     synced = False
     while not synced:
         try:
